@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -295,8 +296,8 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
 
         foreach ($this->_itemKeys as $itemKey) {
             if (isset($attributes[$itemKey])) {
-                if(is_array($attributes[$itemKey])) {
-                    foreach($attributes[$itemKey] as $key => $value) {
+                if (is_array($attributes[$itemKey])) {
+                    foreach ($attributes[$itemKey] as $key => $value) {
                         $link .= sprintf('%s="%s" ', $key, ($this->_autoEscape) ? $this->_escape($value) : $value);
                     }
                 } else {
@@ -315,10 +316,11 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
             return '';
         }
 
-        if (isset($attributes['conditionalStylesheet'])
+        if (
+            isset($attributes['conditionalStylesheet'])
             && !empty($attributes['conditionalStylesheet'])
-            && is_string($attributes['conditionalStylesheet']))
-        {
+            && is_string($attributes['conditionalStylesheet'])
+        ) {
             if (str_replace(' ', '', $attributes['conditionalStylesheet']) === '!IE') {
                 $link = '<!-->' . $link . '<!--';
             }
@@ -337,8 +339,8 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
     public function toString($indent = null)
     {
         $indent = (null !== $indent)
-                ? $this->getWhitespace($indent)
-                : $this->getIndent();
+            ? $this->getWhitespace($indent)
+            : $this->getIndent();
 
         $items = array();
         $this->getContainer()->ksort();
@@ -374,6 +376,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         $media                 = 'screen';
         $conditionalStylesheet = false;
         $href                  = array_shift($args);
+        $extras = [];
 
         if ($this->_isDuplicateStylesheet($href)) {
             return false;
@@ -381,7 +384,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
 
         if (0 < count($args)) {
             $media = array_shift($args);
-            if(is_array($media)) {
+            if (is_array($media)) {
                 $media = implode(',', $media);
             } else {
                 $media = (string) $media;
@@ -389,14 +392,14 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         }
         if (0 < count($args)) {
             $conditionalStylesheet = array_shift($args);
-            if(!empty($conditionalStylesheet) && is_string($conditionalStylesheet)) {
+            if (!empty($conditionalStylesheet) && is_string($conditionalStylesheet)) {
                 $conditionalStylesheet = (string) $conditionalStylesheet;
             } else {
                 $conditionalStylesheet = null;
             }
         }
 
-        if(0 < count($args) && is_array($args[0])) {
+        if (0 < count($args) && is_array($args[0])) {
             $extras = array_shift($args);
             $extras = (array) $extras;
         }
@@ -441,11 +444,11 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         $type  = array_shift($args);
         $title = array_shift($args);
 
-        if(0 < count($args) && is_array($args[0])) {
+        if (0 < count($args) && is_array($args[0])) {
             $extras = array_shift($args);
             $extras = (array) $extras;
 
-            if(isset($extras['media']) && is_array($extras['media'])) {
+            if (isset($extras['media']) && is_array($extras['media'])) {
                 $extras['media'] = implode(',', $extras['media']);
             }
         }
@@ -466,7 +469,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
     protected function _applyExtras($attributes)
     {
         if (isset($attributes['extras'])) {
-            foreach ($attributes['extras'] as $eKey=>$eVal) {
+            foreach ($attributes['extras'] as $eKey => $eVal) {
                 if (isset($attributes[$eKey])) {
                     $attributes[$eKey] = $eVal;
                     unset($attributes['extras'][$eKey]);
